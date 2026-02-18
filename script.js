@@ -1,74 +1,63 @@
-// 🎵 Música
-const music = document.getElementById("music");
-document.getElementById("playMusic").addEventListener("click", () => {
-    music.play();
-});
+// ========================
+// 🌌 FONDO ESTRELLADO FLUIDO
+// ========================
 
-// 🌙 Modo noche
-document.getElementById("modoNoche").addEventListener("click", () => {
-    document.body.classList.toggle("dark-mode");
-});
-
-// 🌌 Fondo estrellas
 const canvas = document.getElementById("stars");
 const ctx = canvas.getContext("2d");
 
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+function resizeCanvas() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+resizeCanvas();
+window.addEventListener("resize", resizeCanvas);
 
 let stars = [];
+let numStars = window.innerWidth < 768 ? 120 : 250;
 
-for (let i = 0; i < 200; i++) {
-    stars.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        r: Math.random() * 2
-    });
+for (let i = 0; i < numStars; i++) {
+  stars.push({
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height,
+    r: Math.random() * 2,
+    dx: (Math.random() - 0.5) * 0.3,
+    dy: (Math.random() - 0.5) * 0.3
+  });
 }
 
-function drawStars() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+function animate() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  stars.forEach(star => {
+    star.x += star.dx;
+    star.y += star.dy;
+
+    if (star.x < 0 || star.x > canvas.width) star.dx *= -1;
+    if (star.y < 0 || star.y > canvas.height) star.dy *= -1;
+
+    ctx.beginPath();
+    ctx.arc(star.x, star.y, star.r, 0, Math.PI * 2);
     ctx.fillStyle = "white";
-    stars.forEach(star => {
+    ctx.fill();
+  });
+
+  // Conectar estrellas cercanas
+  for (let i = 0; i < stars.length; i++) {
+    for (let j = i; j < stars.length; j++) {
+      let dx = stars[i].x - stars[j].x;
+      let dy = stars[i].y - stars[j].y;
+      let dist = Math.sqrt(dx * dx + dy * dy);
+
+      if (dist < 90) {
+        ctx.strokeStyle = "rgba(255,255,255,0.08)";
         ctx.beginPath();
-        ctx.arc(star.x, star.y, star.r, 0, Math.PI * 2);
-        ctx.fill();
-    });
-    requestAnimationFrame(drawStars);
+        ctx.moveTo(stars[i].x, stars[i].y);
+        ctx.lineTo(stars[j].x, stars[j].y);
+        ctx.stroke();
+      }
+    }
+  }
+
+  requestAnimationFrame(animate);
 }
-drawStars();
-
-// 🌌 Mapa estelar simbólico 22-02-2025 Eldorado 10AM
-const sky = document.getElementById("skyMap");
-const skyCtx = sky.getContext("2d");
-
-sky.width = 500;
-sky.height = 400;
-
-for (let i = 0; i < 150; i++) {
-    skyCtx.beginPath();
-    skyCtx.arc(Math.random() * 500, Math.random() * 400, 2, 0, Math.PI * 2);
-    skyCtx.fillStyle = "white";
-    skyCtx.fill();
-}
-
-// 🖼 Carrusel FUNCIONAL
-let current = 0;
-const images = document.querySelectorAll(".carousel img");
-
-function showImage(index) {
-    images.forEach(img => img.classList.remove("active"));
-    images[index].classList.add("active");
-}
-
-showImage(current);
-
-document.querySelector(".next").addEventListener("click", () => {
-    current = (current + 1) % images.length;
-    showImage(current);
-});
-
-document.querySelector(".prev").addEventListener("click", () => {
-    current = (current - 1 + images.length) % images.length;
-    showImage(current);
-});
+animate();
