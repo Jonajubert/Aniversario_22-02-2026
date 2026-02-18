@@ -1,0 +1,90 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: black;
+    color: white;
+    overflow-x: hidden;
+    text-align: center;
+}
+
+canvas#stars {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1;
+}
+
+.hero {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+h1 {
+    font-size: 4rem;
+}
+
+button {
+    padding: 10px 20px;
+    background: #ff4da6;
+    border: none;
+    color: white;
+    cursor: pointer;
+    border-radius: 10px;
+    margin-top: 20px;
+}
+
+.frase {
+    padding: 60px;
+}
+
+.atributos {
+    color: #ff99cc;
+    font-size: 1.2rem;
+}
+
+.escorpio {
+    padding: 60px;
+}
+
+.timeline {
+    padding: 60px;
+}
+
+.event {
+    margin: 20px;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: 1s;
+}
+
+.event.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.carousel-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.carousel {
+    width: 400px;
+    overflow: hidden;
+}
+
+.carousel img {
+    width: 100%;
+    display: none;
+    border-radius: 15px;
+}
+
+.carousel img.active {
+    display: block;
+}
+
+.sorpresa {
+    padding: 60px;
+}
