@@ -1,10 +1,7 @@
-// 🎵 Música
-const music = document.getElementById("music");
-document.getElementById("playMusic").addEventListener("click", () => {
-    music.play();
-});
+// =============================
+// 🌌 FONDO ESTRELLADO CINEMÁTICO
+// =============================
 
-// 🌌 Fondo estrellado
 const canvas = document.getElementById("stars");
 const ctx = canvas.getContext("2d");
 
@@ -12,83 +9,138 @@ canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
 let stars = [];
+let mouse = { x: null, y: null };
 
-for (let i = 0; i < 200; i++) {
+window.addEventListener("mousemove", (e) => {
+    mouse.x = e.x;
+    mouse.y = e.y;
+});
+
+for (let i = 0; i < 250; i++) {
     stars.push({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
-        radius: Math.random() * 2
+        radius: Math.random() * 2,
+        vx: (Math.random() - 0.5) * 0.5,
+        vy: (Math.random() - 0.5) * 0.5
     });
 }
 
-function drawStars() {
+function animateStars() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.fillStyle = "white";
+
     stars.forEach(star => {
+        star.x += star.vx;
+        star.y += star.vy;
+
+        if (star.x < 0 || star.x > canvas.width) star.vx *= -1;
+        if (star.y < 0 || star.y > canvas.height) star.vy *= -1;
+
         ctx.beginPath();
         ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+        ctx.fillStyle = "white";
         ctx.fill();
     });
+
+    // Conectar estrellas cercanas
+    for (let i = 0; i < stars.length; i++) {
+        for (let j = i; j < stars.length; j++) {
+            let dx = stars[i].x - stars[j].x;
+            let dy = stars[i].y - stars[j].y;
+            let distance = Math.sqrt(dx * dx + dy * dy);
+
+            if (distance < 100) {
+                ctx.strokeStyle = "rgba(255,255,255,0.1)";
+                ctx.beginPath();
+                ctx.moveTo(stars[i].x, stars[i].y);
+                ctx.lineTo(stars[j].x, stars[j].y);
+                ctx.stroke();
+            }
+        }
+    }
+
+    requestAnimationFrame(animateStars);
 }
 
-setInterval(drawStars, 50);
+animateStars();
 
-// 🦂 Constelación Escorpio
-const scorpioCanvas = document.getElementById("scorpioCanvas");
-const scorpioCtx = scorpioCanvas.getContext("2d");
 
-scorpioCanvas.width = 400;
-scorpioCanvas.height = 300;
+// =============================
+// 🕰 CUENTA REGRESIVA
+// =============================
 
-const points = [
-    [50, 200], [100, 150], [150, 180],
-    [200, 130], [250, 170], [300, 120],
-    [350, 160]
-];
+const countdownDate = new Date("Feb 22, 2026 00:00:00").getTime();
 
-scorpioCtx.strokeStyle = "white";
-scorpioCtx.beginPath();
-scorpioCtx.moveTo(points[0][0], points[0][1]);
-points.forEach(p => scorpioCtx.lineTo(p[0], p[1]));
-scorpioCtx.stroke();
+setInterval(() => {
+    const now = new Date().getTime();
+    const distance = countdownDate - now;
 
-points.forEach(p => {
-    scorpioCtx.beginPath();
-    scorpioCtx.arc(p[0], p[1], 4, 0, Math.PI * 2);
-    scorpioCtx.fillStyle = "white";
-    scorpioCtx.fill();
-});
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
 
-// 🗓 Timeline animado
-const events = document.querySelectorAll(".event");
-window.addEventListener("scroll", () => {
-    events.forEach(event => {
-        const position = event.getBoundingClientRect().top;
-        if (position < window.innerHeight - 100) {
-            event.classList.add("visible");
-        }
-    });
-});
+    const counter = document.getElementById("countdown");
+    if (counter) {
+        counter.innerHTML = "Faltan " + days + " días para nuestro segundo aniversario 💫";
+    }
 
-// 🖼 Carrusel
+}, 1000);
+
+
+// =============================
+// 🖼 CARRUSEL CON FADE
+// =============================
+
 let current = 0;
 const images = document.querySelectorAll(".carousel img");
-images[current].classList.add("active");
+
+function showImage(index) {
+    images.forEach(img => img.style.opacity = 0);
+    images[index].style.opacity = 1;
+}
+
+showImage(current);
 
 document.querySelector(".next").addEventListener("click", () => {
-    images[current].classList.remove("active");
     current = (current + 1) % images.length;
-    images[current].classList.add("active");
+    showImage(current);
 });
 
 document.querySelector(".prev").addEventListener("click", () => {
-    images[current].classList.remove("active");
     current = (current - 1 + images.length) % images.length;
-    images[current].classList.add("active");
+    showImage(current);
 });
 
-// 🎁 Sorpresa
-document.getElementById("btnSorpresa").addEventListener("click", () => {
-    document.getElementById("mensajeOculto").innerText =
-    "Elegirte fue la mejor decisión de mi vida. Y volvería a hacerlo mil veces más.";
-});
+
+// =============================
+// 🎵 MÚSICA CON FADE IN
+// =============================
+
+const music = document.getElementById("music");
+const playBtn = document.getElementById("playMusic");
+
+if (playBtn) {
+    playBtn.addEventListener("click", () => {
+        music.volume = 0;
+        music.play();
+
+        let fade = setInterval(() => {
+            if (music.volume < 0.9) {
+                music.volume += 0.05;
+            } else {
+                clearInterval(fade);
+            }
+        }, 200);
+    });
+}
+
+
+// =============================
+// 💌 CARTA DESPLEGABLE
+// =============================
+
+const btnCarta = document.getElementById("abrirCarta");
+
+if (btnCarta) {
+    btnCarta.addEventListener("click", () => {
+        document.getElementById("cartaContenido").classList.toggle("visible");
+    });
+}
