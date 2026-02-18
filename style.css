@@ -3,76 +3,71 @@ body {
     font-family: Arial, sans-serif;
     background: black;
     color: white;
-    overflow-x: hidden;
     text-align: center;
+    overflow-x: hidden;
+}
+
+.intro {
+    position: fixed;
+    width: 100%;
+    height: 100vh;
+    background: black;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    z-index: 999;
+    animation: fadeOut 4s ease 3s forwards;
+}
+
+@keyframes fadeOut {
+    to { opacity: 0; visibility: hidden; }
 }
 
 canvas#stars {
     position: fixed;
-    top: 0;
-    left: 0;
+    width: 100%;
+    height: 100%;
     z-index: -1;
 }
 
 .hero {
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-h1 {
-    font-size: 4rem;
+    padding-top: 120px;
 }
 
 button {
-    padding: 10px 20px;
-    background: #ff4da6;
+    padding: 12px 20px;
     border: none;
+    border-radius: 8px;
+    background: #ff4da6;
     color: white;
     cursor: pointer;
-    border-radius: 10px;
     margin-top: 20px;
 }
 
 .frase {
-    padding: 60px;
-}
-
-.atributos {
-    color: #ff99cc;
+    padding: 40px 20px;
     font-size: 1.2rem;
 }
 
-.escorpio {
-    padding: 60px;
-}
-
-.timeline {
-    padding: 60px;
-}
-
-.event {
-    margin: 20px;
-    opacity: 0;
-    transform: translateY(30px);
-    transition: 1s;
-}
-
-.event.visible {
-    opacity: 1;
-    transform: translateY(0);
+.mapa canvas {
+    width: 90%;
+    max-width: 500px;
+    height: 400px;
+    margin-top: 20px;
 }
 
 .carousel-container {
     display: flex;
     justify-content: center;
     align-items: center;
+    gap: 10px;
 }
 
 .carousel {
-    width: 400px;
+    width: 90%;
+    max-width: 400px;
     overflow: hidden;
+    position: relative;
 }
 
 .carousel img {
@@ -85,25 +80,12 @@ button {
     display: block;
 }
 
-.sorpresa {
-    padding: 60px;
+.modo-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
 }
 
-.carousel img {
-    width: 100%;
-    position: absolute;
-    transition: opacity 1s ease;
-}
-
-.carta-texto {
-    max-width: 600px;
-    margin: auto;
-    opacity: 0;
-    transform: translateY(20px);
-    transition: 1s;
-}
-
-.carta-texto.visible {
-    opacity: 1;
-    transform: translateY(0);
+.dark-mode {
+    background: #000814;
 }
