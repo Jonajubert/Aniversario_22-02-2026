@@ -88,3 +88,22 @@ button {
 .sorpresa {
     padding: 60px;
 }
+
+.carousel img {
+    width: 100%;
+    position: absolute;
+    transition: opacity 1s ease;
+}
+
+.carta-texto {
+    max-width: 600px;
+    margin: auto;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: 1s;
+}
+
+.carta-texto.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
