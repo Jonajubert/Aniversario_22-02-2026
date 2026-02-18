@@ -9,48 +9,28 @@
 
 <body>
 
+<div class="intro">
+    <h1>22 • 02 • 2025</h1>
+    <p>El día que el universo cambió para siempre.</p>
+</div>
+
 <canvas id="stars"></canvas>
 
 <section class="hero">
-    <h1>22 • 02 • 2025</h1>
     <h2>Un año de nuestro para siempre</h2>
     <button id="playMusic">▶ Reproducir nuestra canción</button>
 </section>
 
-<section>
-    <h2 id="countdown"></h2>
-</section>
-
-<section class="carta">
-    <button id="abrirCarta">💌 Leer lo que siento por vos</button>
-    <div id="cartaContenido" class="carta-texto">
-        Desde el 22-02-2025 entendí que el amor no era una palabra,
-        era una decisión diaria. Elegirte fue la mejor decisión de mi vida.
-        Y volvería a hacerlo infinitas veces.
-    </div>
-</section>
-    
 <section class="frase">
     <h3>
         Un año contigo fue suficiente para entender 
         que el universo entero conspiró para que nos encontráramos.
     </h3>
-    <p class="atributos">
-        Intensa · Leal · Fuerte · Inteligente · Apasionada · Mi hogar · Mi mejor decisión
-    </p>
 </section>
 
-<section class="escorpio">
-    <h2>Ella, Escorpio ♏</h2>
-    <canvas id="scorpioCanvas"></canvas>
-</section>
-
-<section class="timeline">
-    <h2>Mientras nuestro amor crecía, el mundo vivía esto...</h2>
-    <div class="event">🌍 Avances en Inteligencia Artificial global</div>
-    <div class="event">🚀 Nuevas misiones espaciales de NASA</div>
-    <div class="event">🌡 Récords climáticos históricos</div>
-    <div class="event">🌎 Eventos políticos de impacto mundial</div>
+<section class="mapa">
+    <h2>Así estaba el cielo el 22-02-2025 | 10:00 AM</h2>
+    <canvas id="skyMap"></canvas>
 </section>
 
 <section class="galeria">
@@ -66,10 +46,7 @@
     </div>
 </section>
 
-<section class="sorpresa">
-    <button id="btnSorpresa">✨ Mensaje Secreto</button>
-    <p id="mensajeOculto"></p>
-</section>
+<button id="modoNoche" class="modo-btn">🌙 Modo Noche</button>
 
 <audio id="music" loop>
     <source src="assets/perfecto.mp3" type="audio/mp3">
@@ -78,4 +55,3 @@
 <script src="script.js"></script>
 </body>
 </html>
-
